@@ -14,7 +14,8 @@ from diracore.support.config import AppConfig as BaseAppConfig
 import os
 from urllib.parse import urlparse
 from typing import List, Dict, Any, Tuple
-from pydantic import BaseModel, Field
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 
 def default_url():
@@ -29,13 +30,13 @@ def default_url():
     return [__host, __port]
 
 
-class AppConfig(BaseAppConfig):
+class AppConfig(BaseSettings):
     env: str = Field(alias='app_env', default='local')
     url: str = Field(alias='app_url', default='localhost')
     host: str = Field(alias='app_host', default=default_url()[0])
     port: str|int = Field(alias='app_port', default=default_url()[1])
-
-    providers: Tuple[List[ServiceProvider]]|List[ServiceProvider] = BaseAppConfig().providers + [
+    
+    providers: Any = ServiceProvider.default_list() + [
         MiddlewareServiceProvider,
         app_service.AppServiceProvider,
         route_service.RouteServiceProvider,
@@ -44,5 +45,3 @@ class AppConfig(BaseAppConfig):
     middlewares: Dict[str, Any] = {
         'api:auth': JWTAuthentication
     }
-    
-    
