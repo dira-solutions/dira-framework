@@ -23,15 +23,27 @@ class ConnectionDBConfig(BaseSettings):
     password: str = Field(alias='db_password', default='')
     charset: str = Field(alias='utf8', default=None)
     prefix: str = Field(alias='', default=None)
-    prefix_indexes: str = Field(default=True)
+    prefix_indexes: str|bool = Field(default=True)
     search_path: str = Field(default='public')
     sslmode: str = Field(default='prefer')
-    
+
 class ConnectionSqliteConfig(ConnectionDBConfig):
-    url: str = Field(alias='db_url', default='database/db.sqlite')
+    url: str = Field(alias='db_url', default='database/sql/db.sqlite')
+    file_path: str = Field(alias='db_path', default='database/sql/db.sqlite')
+    
+
+class ConnectionRedisConfig(BaseSettings):
+    url: str|None = Field(alias='redis_url', default=None)
+    host: str = Field(alias='redis_host', default='127.0.0.1')
+    port: str = Field(alias='redis_port', default='6379')
+    db: str|int = Field(alias='redis_database', default=0)
+    username: str = Field(alias='redis_username', default='')
+    password: str = Field(alias='redis_password', default='')
+
 
 class ModelsDBConfig(BaseModelsDBConfig):
     path: list[str] = ["app/entity/"]
+
 
 class DatabaseConfig(BaseDatabaseConfig):
     default: str = Field(alias='db_connection', default=None)
@@ -40,3 +52,8 @@ class DatabaseConfig(BaseDatabaseConfig):
         "pgsql": ConnectionDBConfig().model_dump(),
     }
     models: ModelsDBConfig = ModelsDBConfig()
+    migration_path: str = Field(alias='db_migration_path', default='./database/migrations')
+
+    redis: dict[str, Any] = {
+        "default": ConnectionRedisConfig().model_dump()
+    }

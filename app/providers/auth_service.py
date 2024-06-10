@@ -1,5 +1,5 @@
-from diracore.support.auth.model import User
-from diracore.support.auth.service import AuthServiceProvider as AuthBaseServiceProvider
+from app.entity.user import User
+from diracore.support.http.auth.service import AuthServiceProvider as AuthBaseServiceProvider
 
 class AuthServiceProvider(AuthBaseServiceProvider):
     async def register(self):
