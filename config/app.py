@@ -5,8 +5,10 @@ from app.providers import (
     auth_service,
 )
 
+from diramigrate.provider import DBMigrateServiceProvider
+
 from diracore.support.service_provider import ServiceProvider
-from diracore.support.auth.middleware import JWTAuthentication
+from diracore.support.http.auth.middleware import JWTAuthentication
 from diracore.foundation.support.providers.middleware_service import MiddlewareServiceProvider
 
 from diracore.support.config import AppConfig as BaseAppConfig
@@ -41,6 +43,8 @@ class AppConfig(BaseSettings):
         app_service.AppServiceProvider,
         route_service.RouteServiceProvider,
         auth_service.AuthServiceProvider,
+        
+        DBMigrateServiceProvider,
     ]
     middlewares: Dict[str, Any] = {
         'api:auth': JWTAuthentication

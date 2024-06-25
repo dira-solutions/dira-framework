@@ -1,4 +1,4 @@
-from diracore.support.auth.controller import AuthenticationController
+from diracore.support.http.auth.controller import AuthenticationController
 from diracore.routing.router import Route, RouteList
 from diracore.main import app
 

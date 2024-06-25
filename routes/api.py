@@ -2,7 +2,7 @@
 from app.http.controllers.controller import Controller, UserController
 from diracore.routing.router import HttpRoute, Route, RouteList
 from diracore.main import app
-from diracore.support.auth.middleware import JWTAuthentication
+from diracore.support.http.auth.middleware import JWTAuthentication
 
 route: RouteList = app.make(Route)
 
