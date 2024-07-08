@@ -5,3 +5,4 @@ __pycache__/
 *.egg-info/
 .venv
 venv
+diramigrate.TORTOISE_ORM

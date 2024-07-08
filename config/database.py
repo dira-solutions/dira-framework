@@ -46,7 +46,7 @@ class ModelsDBConfig(BaseModelsDBConfig):
 
 
 class DatabaseConfig(BaseDatabaseConfig):
-    default: str = Field(alias='db_connection', default=None)
+    default: str|None = Field(alias='db_connection', default=None)
     connections: dict[str, Any] = {
         "sqlite": ConnectionSqliteConfig().model_dump(),
         "pgsql": ConnectionDBConfig().model_dump(),
